@@ -1,5 +1,5 @@
-#include <WiFi.h>
 #include <Arduino.h>
+#include <WiFi.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include "SPIFFS.h"
@@ -12,7 +12,6 @@
 #include <Wire.h>
 #include "OneButton.h"
 #include <INA219_WE.h>
-#include "esp32-hal-cpu.h"
 #define I2C_ADDRESS 0x40
 #define PIN_INPUT1 35
 #define PIN_INPUT2 36
@@ -83,8 +82,6 @@ int bckRWeight;
 int lcdIndex = 0;
 bool buttonPressed = false;
 
-String loading = "Loading";
-
 HX711 scale1; //Front Left//
 HX711 scale2; //Front Right//
 HX711 scale3; //Back Left//
@@ -138,19 +135,15 @@ String getWeightReadingsWithScreen() { //Getting the readings and outputting the
    lcd.setCursor(0, 0);
    lcd.print("Front Left:");
    lcd.print(frntLWeight);
-   lcd.print("kg");
    lcd.setCursor(0, 1);
    lcd.print("Front Right:");
    lcd.print(frntRWeight);
-   lcd.print("kg");
    lcd.setCursor(0, 2);
    lcd.print("Back Left:");
    lcd.print(bckLWeight);
-   lcd.print("kg");
    lcd.setCursor(0, 3);
    lcd.print("Back Right:");
    lcd.print(bckRWeight);
-   lcd.print("kg");
    
    String jsonString = JSON.stringify(readings);
    return jsonString;
@@ -492,12 +485,10 @@ void saveCalibrationFactors() {
 
 void setup() {
   Serial.begin(115200);
-
-  setCpuFrequencyMhz(120);
-  int cpuFreq = getCpuFrequencyMhz();
-  Serial.print("CPU frequency: ");
-  Serial.print(cpuFreq);
-  Serial.println(" MHz");
+  rtc_cpu_freq_config_t config;
+  rtc_clk_cpu_freq_get_config(&config);
+  rtc_clk_cpu_freq_to_config(RTC_CPU_FREQ_80M, &config);
+  rtc_clk_cpu_freq_set_config_fast(&config);
 
   pinMode(23, OUTPUT);
   pinMode(27, OUTPUT);
@@ -510,12 +501,6 @@ void setup() {
   
   getNetworkSSID();
   getNetworkPassword();
-
-  Wire.begin();
-  lcd.begin(20, 4);
-  lcd.configureBacklightPin(3);
-  lcd.backlight();
-  Serial.println("Started wire and lcd");
   
   //Starting the ESP's WiFi as its own network and as a devicec on the network//
   WiFi.mode(WIFI_AP_STA);
@@ -531,20 +516,8 @@ void setup() {
   
   while (WiFi.status() != WL_CONNECTED && (millis() - startAttemptTime) < timeout)
   {
-    for (int i = 1; i <= 3; i++) {
-    lcd.setCursor(loading.length(), 0);
-    for (int j = 0; j < i; j++) {
-      lcd.print(".");
-      delay(100);
-    }
+    Serial.print(".");
     delay(100);
-    lcd.setCursor(loading.length(), 0);
-    for (int j = 0; j < i; j++) {
-      lcd.print(" ");
-    }
-    delay(100);
-  }
-}
   }
   WiFi.setHostname(hostname);
   Serial.print("\n[+] Connected to WiFi network with local IP : ");
@@ -588,6 +561,12 @@ void setup() {
     scale4.tare();
     Serial.println("Tared the scales");
 
+    Wire.begin();
+    lcd.begin(20, 4);
+    lcd.configureBacklightPin(3);
+    lcd.backlight();
+    Serial.println("Started wire and lcd");
+
     button1.attachClick(click1);
     button2.attachClick(click2);
 
@@ -597,21 +576,12 @@ void setup() {
 //Loop to get a reading from the scale every 1 second as well as display the readings on the screen and the website
 void loop() {
   unsigned long currentMillis = millis();
-  
+
 //Calls get readings updating the webpage and lcd of weight values and handles what shouldbe displayed on the screen if it is not the weight values. Happens every second
 if (currentMillis - previousMillis1 >= interval1)
   {
     unsigned long startTime = millis();
     previousMillis1 = currentMillis;
-    int ledState = digitalRead(27);
-    batteryPercent = (((busVoltage_V -12) / 4.8)*100);
-//Checking if the battery is low, and flashes the LED if it is low
-      if (batteryPercent <= 90)
-      {
-        ledState = !ledState;
-        digitalWrite(27, ledState);
-      }
-//Checking what page of the lcd we are on and call the readings and update display appropriately
       if (lcdIndex == 0)
       {
         String weightReadings = getWeightReadingsWithScreen();

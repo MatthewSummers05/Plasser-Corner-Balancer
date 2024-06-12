@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Plasser Corner Balancer</title>
+    <meta property="og:title" content="Plasser Corner Balancer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <style data-tag="reset-style-sheet">
+      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}html { scroll-behavior: smooth  }
+    </style>
+    <style data-tag="default-style-sheet">
+      html {
+        font-family: Inter;
+        font-size: 16px;
+      }
+
+      body {
+        font-weight: 400;
+        font-style:normal;
+        text-decoration: none;
+        text-transform: none;
+        letter-spacing: normal;
+        line-height: 1.15;
+        color: var(--dl-color-gray-black);
+        background-color: var(--dl-color-gray-white);
+
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="css2.css"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="extra_style.css"
+    />
+  </head>
+  <body>
+    <link rel="stylesheet" href="./style.css" />
+    <div>
+      <link href="./index.css" rel="stylesheet" />
+
+      <div class="home-container">
+        <header data-thq="thq-navbar" class="home-navbar-interactive">
+          <div class="home-container01">
+            <div data-thq="thq-navbar-nav" class="home-desktop-menu">
+              <img
+                alt="image"
+                src="./logo.svg"
+                class="home-image"
+              />
+            </div>
+          </div>
+          <a href="index.html" class="home-navlink">
+            <h1 class="home-text">Home</h1>
+          </a>
+          <div class="home-container02">
+            <a href="password-page.html" class="home-navlink1">
+              <h1 class="home-text01">Config</h1>
+            </a>
+          </div>
+          <div data-thq="thq-burger-menu" class="home-burger-menu"></div>
+          <div data-thq="thq-mobile-menu" class="home-mobile-menu">
+            <div class="home-container03">
+              <div data-thq="thq-navbar-nav" class="home-desktop-menu1">
+                <img
+                  alt="image"
+                  src="logo.svg"
+                  class="home-image1"
+                />
+              </div>
+            </div>
+            <a href="index.html"><h1 class="home-text02">Home</h1></a>
+            <div class="home-container04">
+              <a href="config.html" class="home-navlink3">
+                <h1 class="home-text03">Config</h1>
+              </a>
+            </div>
+          </div>
+        </header>
+        <div>
+		<div class="content">
+            <div class="card-grid">
+				<div class="card">
+                    <p class="card-title"> Front Left</p>
+					<br />
+                    <p class="reading"><span id="weight1"></span> kg</p>
+                </div>
+				<div class="card">
+                    <p class="card-title"> Front Right</p>
+					<br />
+                    <p class="reading"><span id="weight2"></span> kg</p>
+                </div>
+				<div class="card">
+                    <p class="card-title"> Back Left</p>
+					<br />
+                    <p class="reading"><span id="weight3"></span> kg</p>
+                </div>
+				<div class="card">
+                    <p class="card-title"> Back Right</p>
+					<br />
+                    <p class="reading"><span id="weight4"></span> kg</p>
+                </div>
+				<div class="card">
+                    <p class="card-title"> Total Weight</p>
+					<br />
+                    <p class="reading"><span id="totalWeight"></span> kg</p>
+                </div>
+				<div class="card">
+                    <p class="card-title"> Calibration Factor (Front Left)</p>
+					<br />
+                    <p class="reading"><span id="caliFactor1"></span> </p>
+                </div>
+				<div class="card">
+                    <p class="card-title"> Calibration Factor (Front Right)</p>
+					<br />
+                    <p class="reading"><span id="caliFactor2"></span> </p>
+                </div>
+				<div class="card">
+                    <p class="card-title"> Calibration Factor (Back Left)</p>
+					<br />
+                    <p class="reading"><span id="caliFactor3"></span> </p>
+                </div>
+				<div class="card">
+                    <p class="card-title"> Calibration Factor (Back Right)</p>
+					<br />
+                    <p class="reading"><span id="caliFactor4"></span> </p>
+                </div>
+				<div class="card">
+                    <p class="card-title"> Battery Percentage</p>
+					<br />
+                    <p class="reading"><span id="batteryPercent"></span>%</p>
+                </div>
+				<input
+					type="text"
+					placeholder="Fuel Tank"
+					name="fuelTank"
+					id="fuelTank"
+					class="valueInput"
+				/>
+				<input
+					type="text"
+					placeholder="Hydraulic Tank"
+					name="hydraulicTank"
+					id="hydraulicTank"
+					class="valueInput"
+				/>
+				<input
+					type="text"
+					placeholder="Water Tank"
+					name="waterTank"
+					id="waterTank"
+					class="valueInput"
+				/>
+				<input
+					type="text"
+					placeholder="Machine Number"
+					name="machineNumber"
+					id="machineNumber"
+					class="valueInput"
+				/>
+				<button class="custom-button" onclick="downloadPDF()">
+					<p class="button-text">Generate Report</p>
+				</button>
+				<button class="custom-button" onclick="tare()">
+					<p class="button-text">Tare</p>
+				</button>
+				<button class="custom-button" onclick="restartESP32()">
+					<p class="button-text">Restart Corner Balancer</p>
+				</button>
+      </div>
+    </div>
+	<script src="index.js"></script>
+	<script src="pdf-lib.min.js"></script>
+  </body>
+</html>

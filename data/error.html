@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<title>Error Page</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Inter; /* Applying the font-family */
+        background-color: #D9D9D9; /* Matching the background color */
+    }
+    .password-page-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+    .password-page-navlink {
+        color: #ffffff;
+        width: 700px;
+        height: 425px;
+        margin: auto;
+        font-size: 100px;
+        font-weight: 700;
+        text-decoration: none;
+        background-color: #070156;
+        border: none; /* Remove border */
+        cursor: pointer;
+        border-radius: 5px; /* Adding border-radius */
+        transition: background-color 0.3s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 1; /* Adjusted line-height */
+        vertical-align: middle; /* Added vertical-align property */
+    }
+    .password-page-navlink:hover {
+        background-color: #040138; /* Darker color on hover */
+    }
+    .password-page-text {
+        text-align: center;
+        margin-bottom: 20px; /* Adding margin to bottom */
+    }
+    .brsmall {
+        display: block;
+        margin-bottom: 1.4em;
+    }
+</style>
+</head>
+<body>
+    <div class="password-page-container">
+        <h1 class="password-page-text">An error has been encountered. Please restart. (If this error persists please contact blank).</h1>
+        <a href="#" class="password-page-navlink button" onclick="errorRestart()">
+            <span>
+                <span class="brsmall"></span>
+                <span style="display: inline-block;">Restart</span>
+            </span>
+        </a>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>

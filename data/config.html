@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Plasser Corner Balancer</title>
+    <meta property="og:title" content="Config - Plasser Corner Balancer"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8"/>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="./style.css"/>
+    <link href="./config.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="config-container">
+    <header data-thq="thq-navbar" class="config-navbar-interactive">
+        <div class="config-container1">
+            <div data-thq="thq-navbar-nav" class="config-desktop-menu">
+                <img
+                        alt="image"
+                        src="logo.svg"
+                        class="config-image"
+                />
+            </div>
+        </div>
+        <a href="index.html" class="config-navlink">
+            <h1 class="config-text">Home</h1>
+        </a>
+        <div class="config-container2">
+            <a href="config.html" class="config-navlink1">
+                <h1 class="config-text01">Config</h1>
+            </a>
+        </div>
+        <div data-thq="thq-burger-menu" class="config-burger-menu"></div>
+        <div data-thq="thq-mobile-menu" class="config-mobile-menu"></div>
+    </header>
+    <div class="config-content">
+        <form>
+            <div class="input-group">
+                <input
+                        name="Cal_Fact1"
+                        type="number"
+                        placeholder="Enter New Front Left Calibration Factor"
+                        id="calFact1Input"
+                        required="true"
+                        class="config-textinput input"
+                />
+                <button
+                        onclick="submitCalibFactor1()"
+                        name="Submit_Cal_Factor1"
+                        type="button"
+                        class="config-button button"
+                >
+                    <span id="calFactSubmit1" class="config-text15">
+                        Submit Front Left
+                    </span>
+                </button>
+            </div>
+            <div class="input-group">
+                <input
+                        name="Cal_Fact2"
+                        type="number"
+                        placeholder="Enter New Front Right Calibration Factor"
+                        id="calFact2Input"
+                        required="true"
+                        class="config-textinput input"
+                />
+                <button
+                        onclick="submitCalibFactor2()"
+                        name="Submit_Cal_Factor2"
+                        type="button"
+                        class="config-button button"
+                >
+                    <span id="calFactSubmit2" class="config-text15">
+                        Submit Front Right
+                    </span>
+                </button>
+            </div>
+            <div class="input-group">
+                <input
+                        name="Cal_Fact3"
+                        type="number"
+                        placeholder="Enter New Back Left Calibration Factor"
+                        id="calFact3Input"
+                        required="true"
+                        class="config-textinput input"
+                />
+                <button
+                        onclick="submitCalibFactor3()"
+                        name="Submit_Cal_Factor3"
+                        type="button"
+                        class="config-button button"
+                >
+                    <span id="calFactSubmit3" class="config-text15">
+                        Submit Back Left
+                    </span>
+                </button>
+            </div>
+            <div class="input-group">
+                <input
+                        name="Cal_Fact4"
+                        type="number"
+                        placeholder="Enter New Back Right Calibration Factor"
+                        id="calFact4Input"
+                        required="true"
+                        class="config-textinput input"
+                />
+                <button
+                        onclick="submitCalibFactor4()"
+                        name="Submit_Cal_Factor4"
+                        type="button"
+                        class="config-button button"
+                >
+                    <span id="calFactSubmit4" class="config-text15">
+                        Submit Back Right
+                    </span>
+                </button>
+            </div>
+            <div class="input-group">
+                <input
+                        name="SSID"
+                        type="text"
+                        placeholder="Enter New Network SSID"
+                        id="newNetworkSSID"
+                        required="true"
+                        class="config-textinput input"
+                />
+                <button
+                        onclick="submitNetworkSSID()"
+                        name="Submit_Network_SSID"
+                        type="button"
+                        class="config-button button"
+                >
+                    <span id="networkSSIDSubmit" class="config-text15">
+                        Submit New SSID
+                    </span>
+                </button>
+            </div>
+            <div class="input-group">
+                <input
+                        name="Password"
+                        type="text"
+                        placeholder="Enter New Network Password"
+                        id="newNetworkPassword"
+                        required="true"
+                        class="config-textinput input"
+                />
+                <button
+                        onclick="submitNetworkPassword()"
+                        name="Submit_Network_Password"
+                        type="button"
+                        class="config-button button"
+                >
+                    <span id="networkPasswordSubmit" class="config-text15">
+                        Submit New Password
+                    </span>
+                </button>
+            </div>
+        </form>
+        <h1 class="config-text02">
+            <span><br>Place an object of known weight onto the sensor.</span>
+            <br />
+            <span>
+                Take the current reading the sensor displays and multiply it by the
+                current calibration factor giving you a raw reading.
+            </span>
+            <br />
+            <span>
+                Take this raw reading and divide it by the weight of the object you
+                used.
+            </span>
+            <br />
+            <span>
+                This leaves you with a new accurate calibration factor which can be
+                applied.
+            </span>
+            <br />
+        </h1>
+        <h1 class="config-text11">
+            <span>How to calculate new calibration factor:</span>
+            <br/>
+        </h1>
+        <h1 class="config-text14">
+            Enter your new calibration factor (no more than 2 decimals using a . not a comma eg. 103.67) here:
+        </h1>
+    </div>
+</div>
+<script src="config.js"></script>
+</body>
+</html>

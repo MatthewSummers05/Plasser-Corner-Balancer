@@ -1,0 +1,281 @@
+html {
+  line-height: 1.15;
+}
+
+body {
+  margin: 0;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: normal;
+  line-height: 1.15;
+  color: var(--dl-color-gray-black);
+  background-color: var(--dl-color-gray-white);
+}
+
+* {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+}
+
+p,
+li,
+ul,
+pre,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+figure,
+blockquote,
+figcaption {
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  background-color: transparent;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+button:-moz-focus,
+[type="button"]:-moz-focus,
+[type="reset"]:-moz-focus,
+[type="submit"]:-moz-focus {
+  outline: 1px dotted ButtonText;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+input {
+  padding: 2px 4px;
+}
+
+img {
+  display: block;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.config-container {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+  background-color: #d9d9d9;
+}
+
+.config-navbar-interactive {
+  width: 100%;
+  display: flex;
+  position: relative;
+  align-items: center;
+  padding-top: var(--dl-space-space-twounits);
+  padding-left: var(--dl-space-space-threeunits);
+  padding-right: var(--dl-space-space-threeunits);
+  padding-bottom: var(--dl-space-space-twounits);
+  justify-content: space-between;
+  background-color: #070156;
+}
+
+.config-container1 {
+  flex: 0 0 auto;
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+}
+
+.config-desktop-menu {
+  flex: 1;
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+}
+
+.config-image {
+  width: 625px;
+  object-fit: cover;
+}
+
+.config-navlink {
+  display: contents;
+}
+
+.config-text {
+  color: rgb(255, 255, 255);
+  width: 96px;
+  align-self: center;
+  font-style: normal;
+  font-weight: 700;
+  text-transform: capitalize;
+  text-decoration: none;
+}
+
+.config-container2 {
+  flex: 0 0 auto;
+  width: 96px;
+  height: auto;
+  display: flex;
+  align-items: space-between;
+  flex-direction: column;
+}
+
+.config-navlink1 {
+  display: contents;
+}
+
+.config-text01 {
+  color: #ffffff;
+  align-self: center;
+  text-decoration: none;
+}
+
+.config-burger-menu {
+  display: none;
+}
+
+.config-mobile-menu {
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100vh;
+  display: none;
+  padding: 32px;
+  z-index: 100;
+  position: absolute;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #fff;
+}
+
+.config-text02 {
+  top: 456px;
+  left: 110px;
+  color: #000000;
+  position: absolute;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.config-text11 {
+  top: 406px;
+  left: 110px;
+  color: #000000;
+  position: absolute;
+}
+
+.config-text14 {
+  margin-top: 20px;
+  color: #000000;
+}
+
+.config-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.config-textinput {
+  padding: 6px 8px; /* Adjust padding for better text fit */
+  width: calc(240px * 1.3); /* Increase width by 30% */
+  height: calc(28px * 1.3); /* Match button height */
+  font-size: 16px; /* Adjust text size to fit input */
+}
+
+.config-button {
+  padding: 6px 12px; /* Adjust padding for better text fit */
+  width: auto; /* Ensure button width adjusts to content */
+  height: calc(28px * 1.3); /* Increase height by 30% */
+  font-size: 16px; /* Adjust text size to fit button */
+}
+
+.config-button:hover {
+  background-color: #1282a2;
+}
+
+.config-text15 {
+  color: #000000;
+}
+
+@media (max-width: 767px) {
+  .config-navbar-interactive {
+    padding-left: var(--dl-space-space-twounits);
+    padding-right: var(--dl-space-space-twounits);
+  }
+
+  .config-desktop-menu {
+    display: none;
+  }
+
+  .config-burger-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 479px) {
+  .config-navbar-interactive {
+    padding: var(--dl-space-space-unit);
+  }
+
+  .config-mobile-menu {
+    padding: 16px;
+  }
+}

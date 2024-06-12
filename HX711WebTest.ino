@@ -100,7 +100,7 @@ String getWeightReadings() {
   busVoltage_V = ina219.getBusVoltage_V();
   batteryPercent = (((busVoltage_V -12) / 4.8)*100);
   readings["batteryPercent"] = batteryPercent;
-  
+
 
   int totalWeight = (frntLWeight + frntRWeight + bckLWeight + bckRWeight);
   readings["totalWeight"] = String(totalWeight);
@@ -121,9 +121,10 @@ String getWeightReadingsWithScreen() { //Getting the readings and outputting the
    readings["weight3"] = String(bckLWeight);
    bckRWeight = (int)scale4.get_units(3);
    readings["weight4"] = String(bckRWeight);
+   busVoltage_V = ina219.getBusVoltage_V();
    batteryPercent = (((busVoltage_V -12) / 4.8)*100);
    readings["batteryPercent"] = batteryPercent;
-      
+
    int totalWeight = (frntLWeight + frntRWeight + bckLWeight + bckRWeight);
    readings["totalWeight"] = String(totalWeight);
    readings["caliFactor1"] = String(calibFactor1);
@@ -135,16 +136,20 @@ String getWeightReadingsWithScreen() { //Getting the readings and outputting the
    lcd.setCursor(0, 0);
    lcd.print("Front Left:");
    lcd.print(frntLWeight);
+   lcd.print("kg");
    lcd.setCursor(0, 1);
    lcd.print("Front Right:");
    lcd.print(frntRWeight);
+   lcd.print("kg");
    lcd.setCursor(0, 2);
    lcd.print("Back Left:");
    lcd.print(bckLWeight);
+   lcd.print("kg");
    lcd.setCursor(0, 3);
    lcd.print("Back Right:");
    lcd.print(bckRWeight);
-   
+   lcd.print("kg");
+
    String jsonString = JSON.stringify(readings);
    return jsonString;
 }
@@ -485,11 +490,6 @@ void saveCalibrationFactors() {
 
 void setup() {
   Serial.begin(115200);
-  rtc_cpu_freq_config_t config;
-  rtc_clk_cpu_freq_get_config(&config);
-  rtc_clk_cpu_freq_to_config(RTC_CPU_FREQ_80M, &config);
-  rtc_clk_cpu_freq_set_config_fast(&config);
-
   pinMode(23, OUTPUT);
   pinMode(27, OUTPUT);
   pinMode(34, INPUT);
@@ -498,11 +498,17 @@ void setup() {
 
   initWebSocket();
   initSPIFFS();
-  
+
   getNetworkSSID();
   getNetworkPassword();
-  
-  //Starting the ESP's WiFi as its own network and as a devicec on the network//
+
+  Wire.begin();
+  lcd.begin(20, 4);
+  lcd.configureBacklightPin(3);
+  lcd.backlight();
+  Serial.println("Started wire and lcd");
+
+  //Starting the ESP's WiFi as its own network and as a device on the network//
   WiFi.mode(WIFI_AP_STA);
   Serial.println("\n[*] Creating ESP32 AP");
   WiFi.softAP(soft_ap_ssid, soft_ap_password);
@@ -510,14 +516,61 @@ void setup() {
   Serial.println(WiFi.softAPIP());
   WiFi.begin(wifi_network_ssid, wifi_network_password);
   Serial.println("\n[*] Connecting to WiFi Network");
-  
+
   unsigned long startAttemptTime = millis();
-  unsigned long timeout = 60000;
-  
+  unsigned long timeout = 15000;
+
   while (WiFi.status() != WL_CONNECTED && (millis() - startAttemptTime) < timeout)
   {
     Serial.print(".");
-    delay(100);
+    lcd.clear();
+    unsigned long previousMillis = 0;
+    const long interval = 500;
+     int i = 0;
+
+     while (i <= 5) {  // Adjusted the loop condition to iterate only 3 times
+    unsigned long currentMillis = millis();  // Get the current time
+    
+    // Check if it's time to update the screen
+    if (currentMillis - previousMillis >= interval) {
+        previousMillis = currentMillis;  // Save the last update time
+        
+         // Set cursor position
+        
+        if (i == 0)
+        {  // Change condition to start from 0
+            lcd.setCursor(4, 0);
+            lcd.print("Loading.");
+        }
+        else if (i == 1)
+        {
+            lcd.setCursor(4, 0);
+            lcd.print("Loading..");
+        }
+        else if (i == 2)
+        {
+            lcd.setCursor(4, 0);
+            lcd.print("Loading...");
+        }
+        else if (i == 3)
+        {
+            lcd.setCursor(4, 0);
+            lcd.print("Loading....");
+        }
+        else if (i == 4)
+        {
+            lcd.setCursor(4, 0);
+            lcd.print("Loading.....");
+        }
+        else if (i == 5)
+        {
+            lcd.setCursor(4, 0);
+            lcd.print("Loading......");
+        }
+        
+        i++;
+       }
+    }
   }
   WiFi.setHostname(hostname);
   Serial.print("\n[+] Connected to WiFi network with local IP : ");
@@ -554,18 +607,12 @@ void setup() {
     scale3.set_scale(calibFactor3);
     scale4.set_scale(calibFactor4);
     Serial.println("Set scales");
-    
+
     scale1.tare();
     scale2.tare();
     scale3.tare();
     scale4.tare();
     Serial.println("Tared the scales");
-
-    Wire.begin();
-    lcd.begin(20, 4);
-    lcd.configureBacklightPin(3);
-    lcd.backlight();
-    Serial.println("Started wire and lcd");
 
     button1.attachClick(click1);
     button2.attachClick(click2);
@@ -576,12 +623,24 @@ void setup() {
 //Loop to get a reading from the scale every 1 second as well as display the readings on the screen and the website
 void loop() {
   unsigned long currentMillis = millis();
-
+//Checking what page of the lcd we are on and call the readings and update display appropriately
 //Calls get readings updating the webpage and lcd of weight values and handles what shouldbe displayed on the screen if it is not the weight values. Happens every second
 if (currentMillis - previousMillis1 >= interval1)
   {
-    unsigned long startTime = millis();
     previousMillis1 = currentMillis;
+    busVoltage_V = ina219.getBusVoltage_V();
+    batteryPercent = (((busVoltage_V -12) / 4.8)*100);
+//Checking if the battery is low, and flashes the LED if it is low
+      if (batteryPercent <= 20)
+      {
+        int ledState = digitalRead(27);
+        ledState = !ledState;
+        digitalWrite(27, ledState); 
+      }
+      else
+      {
+        digitalWrite(27, LOW);
+      }
       if (lcdIndex == 0)
       {
         String weightReadings = getWeightReadingsWithScreen();
@@ -589,14 +648,31 @@ if (currentMillis - previousMillis1 >= interval1)
       }
       else if (lcdIndex == 1)
       {
-        String weightReadings = getWeightReadings();
-        notifyClients(weightReadings);
-        lcd.setCursor(0, 1);
-        lcd.print("Battery Percentage: ");
-        lcd.setCursor(0, 2);
         batteryPercent = (((busVoltage_V -12) / 4.8)*100);
-        lcd.print(batteryPercent);
-        lcd.print("%");
+        if (batteryPercent <= 20)
+        {
+          String weightReadings = getWeightReadings();
+          notifyClients(weightReadings);
+          lcd.setCursor(0, 0);
+          lcd.print("Battery Percentage: ");
+          lcd.setCursor(0, 1);
+          lcd.print(batteryPercent);
+          lcd.print("%");
+          lcd.setCursor(0, 2);
+          lcd.print("Battery Low");
+          lcd.setCursor(0, 3);
+          lcd.print("Connect Charger");
+        }
+        else if (batteryPercent >= 20)
+        {
+          String weightReadings = getWeightReadings();
+          notifyClients(weightReadings);
+          lcd.setCursor(0, 1);
+          lcd.print("Battery Percentage: ");
+          lcd.setCursor(0, 2);
+          lcd.print(batteryPercent);
+          lcd.print("%");
+        }
       }
       else if (lcdIndex == 2)
       {
@@ -638,8 +714,6 @@ if (currentMillis - previousMillis1 >= interval1)
        lcd.setCursor(0, 3);
        lcd.print(WiFi.localIP());
       }
-      unsigned long endTime = millis();
-      Serial.println(endTime - startTime);
  }
       int buttonState = digitalRead(34);
 
@@ -647,7 +721,8 @@ if (currentMillis - previousMillis1 >= interval1)
     if (!buttonPressed) {
       buttonPressed = true;
       buttonPressStartTime = millis(); // Record the time the button was pressed
-    } else {
+    }
+      else {
       // Check if the button has been pressed for the long press duration
       if (millis() - buttonPressStartTime >= longPressDuration) {
         Serial.println("Long press detected");
@@ -655,7 +730,8 @@ if (currentMillis - previousMillis1 >= interval1)
         buttonPressed = false; // Reset the button pressed state to prevent repeated triggering
       }
     }
-  } else { // Button is not pressed
+  }
+  else { // Button is not pressed
     buttonPressed = false; // Reset the button pressed state if the button is released
     }
       button1.tick();
